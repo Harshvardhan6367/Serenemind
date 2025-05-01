@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SereneMind - Find Your Calm</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6d8b74;
+      --primary-light: #a7c4bc;
+      --primary-dark: #5c7a6d;
+      --accent: #d0c9c0;
+      --light: #f5f5f5;
+      --dark: #3a3a3a;
+      --gray: #8e8e8e;
+      --success: #7d9d7d;
+      --error: #d4a5a5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--dark);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    /* Peaceful Nature-Inspired Background */
+    .background-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .background-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('back01.gif') center/cover no-repeat;
+      opacity: 0.15;
+      filter: blur(1px);
+    }
+
+    /* Header Styles */
+    header {
+      background-color: rgba(245, 245, 245, 0.85);
+      width: 100%;
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.75rem;
+      font-weight: 300;
+      color: var(--primary-dark);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+    }
+
+    .nav-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-menu ul li a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 400;
+      transition: all 0.3s;
+      padding: 0.5rem 0;
+      position: relative;
+      font-size: 1.05rem;
+    }
+
+    .nav-menu ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: var(--primary);
+      transition: width 0.3s;
+    }
+
+    .nav-menu ul li a:hover::after {
+      width: 100%;
+    }
+
+    /* Main Content */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      padding: 2rem;
+      gap: 3rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 3rem;
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    .hero-content {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--gray);
+      margin-bottom: 2rem;
+      max-width: 600px;
+      font-weight: 300;
+    }
+
+    .hero-image {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .hero-image:hover img {
+      transform: scale(1.02);
+    }
+
+    /* Login Container */
+    .login-container {
+      background: rgba(245, 245, 245, 0.9);
+      border-radius: 1rem;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      margin: 3rem auto;
+      transition: all 0.3s;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    .login-title {
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: left;
+    }
+
+    .form-label {
+      font-weight: 400;
+      color: var(--dark);
+      font-size: 0.95rem;
+      padding-left: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #e0e0e0;
+      font-size: 1rem;
+      transition: all 0.3s;
+      background-color: white;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(109, 139, 116, 0.1);
+    }
+
+    .login-btn {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.75rem;
+      background-color: var(--primary);
+      border: none;
+      border-radius: 0.5rem;
+      color: white;
+      font-weight: 400;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: 0.5px;
+    }
+
+    .login-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .form-footer {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--gray);
+      font-weight: 300;
+    }
+
+    .login-message {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-weight: 400;
+      display: none;
+      background-color: rgba(212, 165, 165, 0.2);
+      color: var(--error);
+      border: 1px solid rgba(212, 165, 165, 0.3);
+    }
+
+    /* Peaceful Features Section */
+    .features-section {
+      width: 100%;
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background: rgba(245, 245, 245, 0.9);
+      border-radius: 0.75rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      opacity: 0.8;
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      color: var(--primary-dark);
+    }
+
+    .feature-desc {
+      color: var(--gray);
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    /* Breathing Animation */
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .breathing-element {
+      animation: breathe 6s ease-in-out infinite;
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      background-color: rgba(245, 245, 245, 0.9);
+      padding: 2rem;
+      text-align: center;
+      margin-top: auto;
+      color: var(--gray);
+      font-size: 0.9rem;
+      font-weight: 300;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s;
+      font-weight: 400;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-menu ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .hero-title {
+        font-size: 2.25rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+      
+      .login-container {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.75rem;
+      }
+      
+      .login-container {
+        margin: 1.5rem auto;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-wrapper"></div>
+
+  <header>
+    <div class="header-container">
+      <a href="#" class="logo breathing-element">
+        <i class="fas fa-spa"></i>
+        <span>SereneMind</span>
+      </a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="#" onclick="checkLogin('01_index.html')">Home</a></li>
+          <li><a href="#" onclick="checkLogin('02_articles.html')">Articles</a></li>
+          <li><a href="#" onclick="checkLogin('03_meditation.html')">Meditation</a></li>
+          <li><a href="#" onclick="checkLogin('05_chat.html')">Support</a></li>
+          <li><a href="#" onclick="checkLogin('04_Doctors.html')">Professionals</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">Find Your Peace, One Breath at a Time</h1>
+        <p class="hero-subtitle">
+          A gentle space for your mental wellness journey. Access calming resources, 
+          mindful practices, and compassionate support whenever you need it.
+        </p>
+        <div class="login-container">
+          <h2 class="login-title">Welcome to Peace</h2>
+          <form id="login-form" class="login-form">
+            <div class="form-group">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" id="email" class="form-input" placeholder="your.email@example.com" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="contact" class="form-label">Phone Number</label>
+              <input type="tel" id="contact" class="form-input" placeholder="+91 " required>
+            </div>
+            
+            <div class="form-group">
+              <label for="parent-contact" class="form-label">Trusted Contact</label>
+              <input type="tel" id="parent-contact" class="form-input" placeholder="Someone we can reach if needed" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Begin Your Journey</button>
+          </form>
+          <div class="form-footer">
+            Take a deep breath. You're in a safe space.
+          </div>
+          <div class="login-message" id="loginMessage">
+            Please login to continue
+          </div>
+        </div>
+      </div>
+      <div class="hero-image breathing-element">
+        <img src="index_02.avif" alt="Peaceful forest path">
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <h2 class="section-title">Gentle Pathways to Wellness</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h3 class="feature-title">Mindful Practices</h3>
+          <p class="feature-desc">Discover guided meditations and breathing exercises to center yourself in moments of stress.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <h3 class="feature-title">Gentle Guidance</h3>
+          <p class="feature-desc">Read articles written with compassion, offering insights without overwhelming you.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-hands-helping"></i>
+          </div>
+          <h3 class="feature-title">Supportive Community</h3>
+          <p class="feature-desc">Connect with others who understand, in spaces designed for kindness and respect.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-user-md"></i>
+          </div>
+          <h3 class="feature-title">Professional Care</h3>
+          <p class="feature-desc">Access licensed professionals when you need more specialized support.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Safety</a>
+      <a href="#">Resources</a>
+      <a href="#">Contact</a>
+    </div>
+    <p>You are not alone. Help is always available.</p>
+    <p>&copy; 2025 SereneMind. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Check if user is logged in on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check login status
+      if (localStorage.getItem('isLoggedIn') === 'true') {
+        window.location.href = '01_index.html';
+      }
+      
+      // Add subtle animation to login container
+      const loginContainer = document.querySelector('.login-container');
+      setTimeout(() => {
+        loginContainer.style.opacity = '1';
+        loginContainer.style.transform = 'translateY(0)';
+      }, 300);
+    });
+
+    // Login form submission
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const contact = document.getElementById('contact').value;
+      const parentContact = document.getElementById('parent-contact').value;
+      
+      if (email && password && contact && parentContact) {
+        // Show gentle loading state
+        const btn = e.target.querySelector('button[type="submit"]');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Space...';
+        btn.disabled = true;
+        
+        // Simulate peaceful transition
+        setTimeout(() => {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('username', email.split('@')[0]);
+          localStorage.setItem('contact', contact);
+          localStorage.setItem('parentContact', parentContact);
+          
+          // Fade out before redirect
+          document.body.style.opacity = '0';
+          document.body.style.transition = 'opacity 0.5s ease';
+          
+          setTimeout(() => {
+            window.location.href = '07_g1.html';
+          }, 500);
+        }, 1500);
+      }
+    });
+
+    // Check login status before accessing pages
+    function checkLogin(page) {
+      if (localStorage.getItem('isLoggedIn') !== 'true') {
+        const message = document.getElementById('loginMessage');
+        message.style.display = 'block';
+        
+        // Gentle pulse animation
+        message.style.animation = 'pulse 2s ease-in-out';
+        setTimeout(() => {
+          message.style.animation = '';
+        }, 2000);
+        
+        return false;
+      } else {
+        window.location.href = page;
+        return true;
+      }
+    }
+
+    // Add breathing animation to elements
+    const breathingElements = document.querySelectorAll('.breathing-element');
+    breathingElements.forEach(el => {
+      el.style.transformOrigin = 'center center';
+    });
+  </script>
+</body>
+</html>
