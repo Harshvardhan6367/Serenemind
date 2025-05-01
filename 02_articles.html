@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - SereneMind</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6d8b74;
+            --primary-light: #a7c4bc;
+            --primary-dark: #5c7a6d;
+            --accent: #d0c9c0;
+            --light: #f5f5f5;
+            --dark: #3a3a3a;
+            --gray: #8e8e8e;
+            --success: #7d9d7d;
+            --error: #d4a5a5;
+        }
+
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --light: #1a1a1a;
+            --dark: #f0f0f0;
+            --gray: #a0a0a0;
+            --accent: #3a3a3a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* Peaceful Nature-Inspired Background */
+        .background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('mad08.gif') center/cover no-repeat;
+            opacity: 0.15;
+            filter: blur(1px);
+        }
+
+        [data-theme="dark"] .background-wrapper::before {
+            opacity: 0.1;
+            filter: blur(1px) brightness(0.5);
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(245, 245, 245, 0.85);
+            width: 100%;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] header {
+            background-color: rgba(26, 26, 26, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 300;
+            color: var(--primary-dark);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-menu ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 400;
+            transition: all 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .nav-menu ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-menu ul li a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu ul li a.active {
+            color: var(--primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--dark);
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        /* Main Content */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 2rem;
+            margin: 0 auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
+        .category-btn {
+            padding: 0.7rem 1.5rem;
+            border: 1px solid var(--primary);
+            border-radius: 2rem;
+            background: transparent;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            font-size: 0.95rem;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(109, 139, 116, 0.2);
+        }
+
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .article-card {
+            background: rgba(245, 245, 245, 0.9);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+            backdrop-filter: blur(5px);
+        }
+
+        [data-theme="dark"] .article-card {
+            background: rgba(26, 26, 26, 0.9);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .article-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .article-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+
+        .article-content {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: rgba(109, 139, 116, 0.1);
+            color: var(--primary-dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .article-title {
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            line-height: 1.3;
+        }
+
+        .article-excerpt {
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .article-full-content {
+            display: none;
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-full-content p {
+            margin-bottom: 1rem;
+        }
+
+        .article-full-content strong {
+            font-weight: 400;
+            color: var(--primary-dark);
+        }
+
+        .read-more-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .read-more-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(109, 139, 116, 0.3);
+        }
+
+        /* Emergency Contacts */
+        .emergency-contacts {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(109, 139, 116, 0.1);
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        [data-theme="dark"] .emergency-contacts {
+            background: rgba(109, 139, 116, 0.2);
+        }
+
+        .emergency-contacts h2 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(109, 139, 116, 0.3);
+        }
+
+        /* Floating Peace Button */
+        .floating-peace {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(109, 139, 116, 0.3);
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-peace:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(109, 139, 116, 0.4);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .article-card {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .category-filters {
+                gap: 0.5rem;
+            }
+
+            .category-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .floating-peace {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-wrapper"></div>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-peace"></i>
+                <span>SereneMind</span>
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="01_index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#" class="active"><i class="fas fa-newspaper"></i> Articles</a></li>
+                    <li><a href="03_meditation.html"><i class="fas fa-spa"></i> Meditation</a></li>
+                    <li><a href="https://agent.jotform.com/019561cf62ae7d609cb0d3faf8d38aeff7e2"><i
+                                class="fas fa-comments"></i> Support</a></li>
+                    <li><a href="04_doctors.html"><i class="fas fa-user-md"></i> Doctors</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">Mental Wellness Articles</h1>
+            <p class="page-subtitle">Explore our collection of articles to support your mental health journey</p>
+
+            <div class="category-filters">
+                <button class="category-btn active" data-category="all">All Topics</button>
+                <button class="category-btn" data-category="stress">Stress Relief</button>
+                <button class="category-btn" data-category="self-care">Self-Care</button>
+                <button class="category-btn" data-category="mindfulness">Mindfulness</button>
+                <button class="category-btn" data-category="relationships">Relationships</button>
+                <button class="category-btn" data-category="nutrition">Nutrition</button>
+                <button class="category-btn" data-category="sleep">Sleep</button>
+                <button class="category-btn" data-category="anxiety">Anxiety</button>
+                <button class="category-btn" data-category="gratitude">Gratitude</button>
+                <button class="category-btn" data-category="digital-detox">Digital Wellness</button>
+                <button class="category-btn" data-category="nature">Nature Therapy</button>
+                <button class="category-btn" data-category="creativity">Creativity</button>
+                <button class="category-btn" data-category="resilience">Resilience</button>
+                <button class="category-btn" data-category="journaling">Journaling</button>
+                <button class="category-btn" data-category="workplace">Workplace</button>
+                <button class="category-btn" data-category="compassion">Self-Compassion</button>
+                <button class="category-btn" data-category="music">Music Therapy</button>
+                <button class="category-btn" data-category="laughter">Laughter Therapy</button>
+                <button class="category-btn" data-category="cognitive">Cognitive Health</button>
+            </div>
+        </div>
+
+        <div class="articles-grid" id="articlesContainer">
+            <!-- Article 1 -->
+            <div class="article-card" data-categories="stress">
+                <div class="article-image">
+                    <img src="article_01.avif" alt="Stress Relief">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Stress Relief</span>
+                    <h3 class="article-title">5 Ways to Reduce Stress in Your Daily Life</h3>
+                    <p class="article-excerpt">Discover effective techniques to manage stress and improve your overall
+                        well-being with these simple daily practices...</p>
+
+                    <div class="article-full-content">
+                        <p><strong>1. Practice Mindfulness and Meditation</strong><br>
+                            Mindfulness helps bring awareness to the present moment, reducing anxiety and stress. Even
+                            just 5-10 minutes of meditation daily can make a significant difference.</p>
+
+                        <p><strong>2. Exercise Regularly</strong><br>
+                            Physical activity releases endorphins, which help combat stress. Aim for at least 30 minutes
+                            of moderate exercise most days of the week.</p>
+
+                        <p><strong>3. Maintain a Healthy Diet</strong><br>
+                            Eating a balanced diet rich in fruits, vegetables, and whole grains helps regulate stress
+                            hormones and provides essential nutrients for brain health.</p>
+
+                        <p><strong>4. Connect with Loved Ones</strong><br>
+                            Social interactions provide emotional support and help relieve stress. Make time for
+                            meaningful conversations with friends and family.</p>
+
+                        <p><strong>5. Set Realistic Goals and Prioritize Tasks</strong><br>
+                            Break tasks into smaller, manageable steps to avoid feeling overwhelmed. Learn to say no to
+                            non-essential commitments.</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 2 -->
+            <div class="article-card" data-categories="self-care">
+                <div class="article-image">
+                    <img src="article_02.avif" alt="Self-Care">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Self-Care</span>
+                    <h3 class="article-title">The Essential Guide to Building a Self-Care Routine</h3>
+                    <p class="article-excerpt">Learn how to create a personalized self-care plan that nourishes your
+                        mind, body, and soul for long-term well-being...</p>
+
+                    <div class="article-full-content">
+                        <p><strong>1. Physical Self-Care</strong><br>
+                            Taking care of your body improves both physical and mental health. This includes:
+                            <br>✔ Eating a nutritious diet with whole foods
+                            <br>✔ Exercising regularly (walking, yoga, gym, etc.)
+                            <br>✔ Getting 7-9 hours of quality sleep
+                        </p>
+
+                        <p><strong>2. Emotional Self-Care</strong><br>
+                            Managing emotions and understanding your feelings helps in building resilience.
+                            <br>✔ Practice mindfulness and meditation
+                            <br>✔ Write in a journal to express thoughts and emotions
+                            <br>✔ Set healthy boundaries in relationships
+                        </p>
+
+                        <p><strong>3. Mental Self-Care</strong><br>
+                            Keeping your mind engaged and reducing stress enhances cognitive function.
+                            <br>✔ Read books, solve puzzles, or learn a new skill
+                            <br>✔ Take breaks from screens and social media
+                            <br>✔ Practice positive affirmations and gratitude
+                        </p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="article-card" data-categories="mindfulness">
+                <div class="article-image">
+                    <img src="article_03.avif" alt="Mindfulness">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Mindfulness</span>
+                    <h3 class="article-title">Mindfulness Meditation: A Beginner's Guide</h3>
+                    <p class="article-excerpt">Start your mindfulness journey with these simple meditation techniques
+                        that can help reduce anxiety and improve focus...</p>
+
+                    <div class="article-full-content">
+                        <p><strong>Getting Started with Mindfulness</strong><br>
+                            Mindfulness is the practice of being fully present in the moment without judgment. It can be
+                            cultivated through simple daily exercises.</p>
+
+                        <p><strong>Basic Meditation Technique</strong><br>
+                            1. Find a quiet, comfortable place to sit<br>
+                            2. Close your eyes and focus on your breath<br>
+                            3. When your mind wanders, gently bring attention back to breathing<br>
+                            4. Start with 5 minutes daily, gradually increasing time</p>
+
+                        <p><strong>Mindfulness in Daily Life</strong><br>
+                            You can practice mindfulness throughout your day by:
+                            <br>✔ Eating slowly and savoring each bite
+                            <br>✔ Noticing sensations during routine activities
+                            <br>✔ Taking mindful walks in nature
+                        </p>
+
+                        <p><strong>Benefits of Regular Practice</strong><br>
+                            - Reduced stress and anxiety<br>
+                            - Improved focus and concentration<br>
+                            - Better emotional regulation<br>
+                            - Increased self-awareness</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 4 -->
+            <div class="article-card" data-categories="relationships">
+                <div class="article-image">
+                    <img src="article_04.avif" alt="Relationships">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Relationships</span>
+                    <h3 class="article-title">How Healthy Relationships Support Mental Wellness</h3>
+                    <p class="article-excerpt">Explore the connection between strong social connections and improved
+                        mental health with practical tips for nurturing relationships...</p>
+
+                    <div class="article-full-content">
+                        <p><strong>The Importance of Social Connections</strong><br>
+                            Humans are social creatures, and meaningful relationships are fundamental to our mental
+                            well-being. Strong connections can:
+                            <br>- Reduce feelings of loneliness and isolation
+                            <br>- Provide emotional support during difficult times
+                            <br>- Increase feelings of happiness and life satisfaction
+                        </p>
+
+                        <p><strong>Building Healthy Relationships</strong><br>
+                            1. <strong>Practice Active Listening</strong>: Give your full attention when others are
+                            speaking<br>
+                            2. <strong>Show Appreciation</strong>: Regularly express gratitude for your loved ones<br>
+                            3. <strong>Set Boundaries</strong>: Know your limits and communicate them clearly<br>
+                            4. <strong>Spend Quality Time</strong>: Make time for meaningful interactions</p>
+
+                        <p><strong>Recognizing Toxic Relationships</strong><br>
+                            Be aware of relationships that consistently:
+                            <br>- Drain your energy
+                            <br>- Make you feel bad about yourself
+                            <br>- Lack mutual respect and support
+                        </p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 5 -->
+            <div class="article-card" data-categories="nutrition">
+                <div class="article-image">
+                    <img src="article_05.avif" alt="Nutrition">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Nutrition</span>
+                    <h3 class="article-title">Brain-Boosting Foods for Better Mental Health</h3>
+                    <p class="article-excerpt">Discover how certain foods can enhance cognitive function, improve mood,
+                        and support overall mental well-being...</p>
+
+                    <div class="article-full-content">
+                        <p><strong>Foods That Support Brain Health</strong><br>
+                            The food we eat directly impacts our brain function and mental health. Incorporate these
+                            nutrient-rich foods into your diet:</p>
+
+                        <p><strong>1. Omega-3 Fatty Acids</strong><br>
+                            Found in fatty fish (salmon, mackerel), flaxseeds, and walnuts. Essential for brain function
+                            and may help reduce symptoms of depression.</p>
+
+                        <p><strong>2. Antioxidant-Rich Foods</strong><br>
+                            Berries, dark chocolate, and green tea contain antioxidants that protect brain cells from
+                            oxidative stress.</p>
+
+                        <p><strong>3. Whole Grains</strong><br>
+                            Provide steady energy to the brain through slow-release glucose. Choose whole wheat, oats,
+                            and brown rice.</p>
+
+                        <p><strong>4. Leafy Greens</strong><br>
+                            Spinach, kale, and other greens are rich in brain-protective nutrients like vitamin K,
+                            lutein, and folate.</p>
+
+                        <p><strong>5. Probiotic Foods</strong><br>
+                            Yogurt, kefir, and fermented foods support gut health, which is closely linked to mental
+                            health through the gut-brain axis.</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 6 -->
+            <div class="article-card" data-categories="stress,mindfulness">
+                <div class="article-image">
+                    <img src="article_06.avif" alt="Breathing Exercises">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Stress & Mindfulness</span>
+                    <h3 class="article-title">Breathing Techniques for Instant Stress Relief</h3>
+                    <p class="article-excerpt">Learn powerful breathing exercises that can help calm your nervous system
+                        and reduce stress in just minutes...</p>
+
+                    <div class="article-full-content">
+                        <p><strong>Why Breathing Works</strong><br>
+                            Controlled breathing activates the parasympathetic nervous system, which counteracts the
+                            stress response. These techniques can be done anywhere, anytime.</p>
+
+                        <p><strong>1. Box Breathing (4-4-4-4)</strong><br>
+                            - Inhale for 4 seconds<br>
+                            - Hold for 4 seconds<br>
+                            - Exhale for 4 seconds<br>
+                            - Hold for 4 seconds<br>
+                            Repeat for 3-5 minutes</p>
+
+                        <p><strong>2. 4-7-8 Breathing</strong><br>
+                            - Inhale through nose for 4 seconds<br>
+                            - Hold breath for 7 seconds<br>
+                            - Exhale through mouth for 8 seconds<br>
+                            Repeat 4 times</p>
+
+                        <p><strong>3. Diaphragmatic Breathing</strong><br>
+                            - Place one hand on chest, one on belly<br>
+                            - Breathe deeply through nose, ensuring belly rises<br>
+                            - Exhale slowly through pursed lips<br>
+                            Continue for 5-10 minutes</p>
+
+                        <p><strong>4. Alternate Nostril Breathing</strong><br>
+                            - Close right nostril, inhale through left<br>
+                            - Close left nostril, exhale through right<br>
+                            - Inhale through right, close, exhale through left<br>
+                            Repeat for several cycles</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 7 -->
+            <div class="article-card" data-categories="sleep">
+                <div class="article-image">
+                    <img src="article_07.avif" alt="Sleep Hygiene">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Sleep</span>
+                    <h3 class="article-title">The Science of Sleep: How Quality Rest Improves Mental Health</h3>
+                    <p class="article-excerpt">Discover the powerful connection between sleep and mental wellness, plus
+                        practical tips for better sleep hygiene...</p>
+
+                    <div class="article-full-content">
+                        <p><strong>Why Sleep Matters for Mental Health</strong><br>
+                            Sleep is essential for emotional regulation, memory consolidation, and cognitive function.
+                            Poor sleep can exacerbate anxiety, depression, and stress.</p>
+
+                        <p><strong>Sleep Hygiene Tips</strong><br>
+                            1. Maintain a consistent sleep schedule, even on weekends<br>
+                            2. Create a relaxing bedtime routine (reading, warm bath, etc.)<br>
+                            3. Keep your bedroom cool, dark, and quiet<br>
+                            4. Limit screen time 1 hour before bed<br>
+                            5. Avoid caffeine and large meals close to bedtime</p>
+
+                        <p><strong>When to Seek Help</strong><br>
+                            If you regularly experience:<br>
+                            - Difficulty falling/staying asleep<br>
+                            - Daytime fatigue despite adequate time in bed<br>
+                            - Sleep disturbances affecting daily functioning<br>
+                            Consider consulting a sleep specialist.</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 8 -->
+            <div class="article-card" data-categories="anxiety">
+                <div class="article-image">
+                    <img src="article_08.avif" alt="Anxiety Relief">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Anxiety</span>
+                    <h3 class="article-title">Natural Ways to Manage Anxiety Symptoms</h3>
+                    <p class="article-excerpt">Explore evidence-based strategies to reduce anxiety without medication,
+                        from grounding techniques to lifestyle changes...</p>
+                    <div class="article-full-content">
+                        <p><strong>Understanding Anxiety</strong><br>
+                            Anxiety is the body's natural response to stress, but when persistent, it can interfere with
+                            daily life. These techniques can help manage symptoms.</p>
+
+                        <p><strong>Immediate Relief Techniques</strong><br>
+                            1. <strong>5-4-3-2-1 Grounding</strong>: Name 5 things you see, 4 you feel, 3 you hear, 2
+                            you smell, 1 you taste<br>
+                            2. <strong>Progressive Muscle Relaxation</strong>: Tense then relax each muscle group<br>
+                            3. <strong>Cold Water Splash</strong>: Activates the dive reflex to calm nervous system</p>
+
+                        <p><strong>Long-Term Strategies</strong><br>
+                            - Regular exercise (especially yoga and swimming)<br>
+                            - Cognitive Behavioral Therapy techniques<br>
+                            - Limiting caffeine and alcohol<br>
+                            - Establishing a worry "time limit" each day</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 9 -->
+            <div class="article-card" data-categories="gratitude">
+                <div class="article-image">
+                    <img src="article_09.avif" alt="Gratitude Practice">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Gratitude</span>
+                    <h3 class="article-title">The Transformative Power of Gratitude Journaling</h3>
+                    <p class="article-excerpt">Learn how a simple daily gratitude practice can rewire your brain for
+                        positivity and improve overall mental wellbeing...</p>
+                    <div class="article-full-content">
+                        <p><strong>Benefits of Gratitude Practice</strong><br>
+                            Regular gratitude exercises have been shown to:<br>
+                            - Increase happiness and life satisfaction<br>
+                            - Reduce symptoms of depression<br>
+                            - Improve sleep quality<br>
+                            - Strengthen relationships</p>
+
+                        <p><strong>How to Start a Gratitude Journal</strong><br>
+                            1. Choose a consistent time (morning or evening)<br>
+                            2. List 3-5 things you're grateful for<br>
+                            3. Be specific ("I'm grateful for my friend's supportive text")<br>
+                            4. Include challenges you've overcome<br>
+                            5. Try different formats (lists, paragraphs, drawings)</p>
+
+                        <p><strong>Advanced Gratitude Practices</strong><br>
+                            - Write gratitude letters (send or keep private)<br>
+                            - Create a gratitude jar for visual reminders<br>
+                            - Practice gratitude during difficult moments</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 10 -->
+            <div class="article-card" data-categories="digital-detox">
+                <div class="article-image">
+                    <img src="article_10.avif" alt="Digital Detox">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Digital Wellness</span>
+                    <h3 class="article-title">The Mental Health Benefits of a Digital Detox</h3>
+                    <p class="article-excerpt">Discover how reducing screen time and social media use can
+                        decrease anxiety and improve your overall wellbeing...</p>
+                    <div class="article-full-content">
+                        <p><strong>How Technology Affects Mental Health</strong><br>
+                            Excessive screen time can contribute to:<br>
+                            - Increased anxiety and depression<br>
+                            - Poor sleep quality<br>
+                            - Reduced attention span<br>
+                            - Social comparison and low self-esteem</p>
+
+                        <p><strong>Digital Detox Strategies</strong><br>
+                            1. Set screen time limits for social media apps<br>
+                            2. Establish phone-free zones (bedroom, meals)<br>
+                            3. Schedule regular tech-free hours or days<br>
+                            4. Turn off non-essential notifications<br>
+                            5. Replace scrolling with meaningful activities</p>
+
+                        <p><strong>Creating Healthier Digital Habits</strong><br>
+                            - Follow accounts that inspire rather than compare<br>
+                            - Use apps purposefully rather than mindlessly<br>
+                            - Practice single-tasking instead of multitasking<br>
+                            - Set intentional times for checking email/social media</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 11 -->
+            <div class="article-card" data-categories="nature">
+                <div class="article-image">
+                    <img src="article_11.avif" alt="Nature Therapy">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Nature Therapy</span>
+                    <h3 class="article-title">Ecotherapy: How Nature Heals the Mind</h3>
+                    <p class="article-excerpt">Explore the science behind nature's healing effects on
+                        stress, anxiety, and overall mental wellness...</p>
+                    <div class="article-full-content">
+                        <p><strong>The Healing Power of Nature</strong><br>
+                            Studies show spending time in nature can:<br>
+                            - Lower cortisol (stress hormone) levels<br>
+                            - Reduce symptoms of anxiety and depression<br>
+                            - Improve focus and creativity<br>
+                            - Boost immune function</p>
+
+                        <p><strong>Simple Ways to Incorporate Nature Therapy</strong><br>
+                            1. <strong>Forest Bathing</strong>: Mindful immersion in natural settings<br>
+                            2. <strong>Gardening</strong>: Connecting with soil and plant life<br>
+                            3. <strong>Outdoor Exercise</strong>: Walk, run, or yoga in nature<br>
+                            4. <strong>Nature Sounds</strong>: Listen to recordings when indoors<br>
+                            5. <strong>Bring Nature Inside</strong>: Houseplants, natural light</p>
+
+                        <p><strong>Urban Nature Solutions</strong><br>
+                            - Visit local parks regularly<br>
+                            - Create a balcony/porch garden<br>
+                            - Use nature photography as meditation<br>
+                            - Practice "micro-moments" of nature connection</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 12 -->
+            <div class="article-card" data-categories="creativity">
+                <div class="article-image">
+                    <img src="article_12.avif" alt="Creative Therapy">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Creativity</span>
+                    <h3 class="article-title">Art Therapy for Stress Relief and Emotional Healing</h3>
+                    <p class="article-excerpt">Discover how creative expression through art can serve as
+                        a powerful tool for mental wellness and self-discovery...</p>
+                    <div class="article-full-content">
+                        <p><strong>Benefits of Creative Expression</strong><br>
+                            Engaging in art can:<br>
+                            - Reduce stress and anxiety<br>
+                            - Provide emotional release<br>
+                            - Improve self-awareness<br>
+                            - Boost self-esteem<br>
+                            - Enhance problem-solving skills</p>
+
+                        <p><strong>Art Therapy Exercises to Try</strong><br>
+                            1. <strong>Mandala Drawing</strong>: Create circular patterns for
+                            meditation<br>
+                            2. <strong>Emotion Painting</strong>: Express feelings through colors<br>
+                            3. <strong>Collage Making</strong>: Visual representation of
+                            goals/feelings<br>
+                            4. <strong>Clay Work</strong>: Tactile experience for grounding<br>
+                            5. <strong>Doodle Journaling</strong>: Combine words and images</p>
+
+                        <p><strong>Tips for Beginners</strong><br>
+                            - Focus on process, not product<br>
+                            - There's no "right" way to create<br>
+                            - Use simple materials (pencils, crayons, paper)<br>
+                            - Set aside judgment and expectations<br>
+                            - Create regularly, even for short periods</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 13 -->
+            <div class="article-card" data-categories="mindfulness">
+                <div class="article-image">
+                    <img src="article_13.avif" alt="Mindful Walking">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Mindfulness</span>
+                    <h3 class="article-title">The Practice of Mindful Walking for Stress Reduction
+                    </h3>
+                    <p class="article-excerpt">Learn how to transform your daily walks into a
+                        powerful mindfulness practice that calms the mind and reduces anxiety...</p>
+                    <div class="article-full-content">
+                        <p><strong>What is Mindful Walking?</strong><br>
+                            Mindful walking is the practice of bringing full attention to the
+                            experience of walking, engaging all senses in the present moment.</p>
+
+                        <p><strong>How to Practice</strong><br>
+                            1. Begin by standing still, noticing your posture and breath<br>
+                            2. Start walking at a natural pace<br>
+                            3. Focus on sensations in your feet and legs<br>
+                            4. Notice the rhythm of your steps and breathing<br>
+                            5. When your mind wanders, gently return to physical sensations</p>
+
+                        <p><strong>Variations to Try</strong><br>
+                            - <strong>Counting Steps</strong>: Match steps with inhales/exhales<br>
+                            - <strong>Sensory Walk</strong>: Notice sights, sounds, smells<br>
+                            - <strong>Gratitude Walk</strong>: Appreciate things you see<br>
+                            - <strong>Labyrinth Walking</strong>: Meditative path walking</p>
+
+                        <p><strong>Benefits</strong><br>
+                            - Reduces stress and anxiety<br>
+                            - Improves focus and clarity<br>
+                            - Combines physical and mental exercise<br>
+                            - Can be done anywhere, anytime</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 14 -->
+            <div class="article-card" data-categories="resilience">
+                <div class="article-image">
+                    <img src="article_14.avif" alt="Building Resilience">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Resilience</span>
+                    <h3 class="article-title">Building Emotional Resilience in Challenging Times
+                    </h3>
+                    <p class="article-excerpt">Develop the mental toughness to navigate life's
+                        difficulties with these science-backed resilience-building strategies...
+                    </p>
+                    <div class="article-full-content">
+                        <p><strong>What is Emotional Resilience?</strong><br>
+                            Resilience is the ability to adapt to stress and adversity, bouncing
+                            back from difficult experiences while maintaining mental wellbeing.
+                        </p>
+
+                        <p><strong>Key Resilience Factors</strong><br>
+                            1. <strong>Self-Awareness</strong>: Understanding your emotions and
+                            triggers<br>
+                            2. <strong>Mindset</strong>: Viewing challenges as opportunities<br>
+                            3. <strong>Support Systems</strong>: Strong social connections<br>
+                            4. <strong>Self-Care</strong>: Physical and emotional wellbeing<br>
+                            5. <strong>Purpose</strong>: Meaning and direction in life</p>
+
+                        <p><strong>Resilience-Building Exercises</strong><br>
+                            - Practice reframing negative thoughts<br>
+                            - Develop problem-solving skills<br>
+                            - Create a "resilience toolkit" of coping strategies<br>
+                            - Maintain hopeful outlook through small wins<br>
+                            - Learn stress management techniques</p>
+
+                        <p><strong>Daily Resilience Practices</strong><br>
+                            - Morning intention setting<br>
+                            - Evening gratitude reflection<br>
+                            - Regular physical activity<br>
+                            - Maintaining social connections<br>
+                            - Continuous learning and growth</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 15 -->
+            <div class="article-card" data-categories="journaling">
+                <div class="article-image">
+                    <img src="article_15.avif" alt="Therapeutic Journaling">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Journaling</span>
+                    <h3 class="article-title">Therapeutic Journaling for Mental Clarity and Emotional Release</h3>
+                    <p class="article-excerpt">Discover different journaling techniques that can help process emotions, reduce
+                        anxiety, and gain self-awareness...</p>
+                    <div class="article-full-content">
+                        <p><strong>Benefits of Journaling</strong><br>
+                            Regular writing can:<br>
+                            - Reduce stress and anxiety<br>
+                            - Help process difficult emotions<br>
+                            - Improve self-understanding<br>
+                            - Enhance problem-solving abilities<br>
+                            - Track personal growth over time</p>
+
+                        <p><strong>Journaling Techniques to Try</strong><br>
+                            1. <strong>Stream of Consciousness</strong>: Write without filtering thoughts<br>
+                            2. <strong>Prompt-Based</strong>: Answer thought-provoking questions<br>
+                            3. <strong>Bullet Journaling</strong>: Combine planning and reflection<br>
+                            4. <strong>Letter Writing</strong>: Unsent letters to people/yourself<br>
+                            5. <strong>List Making</strong>: Gratitude, accomplishments, etc.</p>
+
+                        <p><strong>Tips for Effective Journaling</strong><br>
+                            - Write regularly, even just a few sentences<br>
+                            - Keep your journal private for honest expression<br>
+                            - Don't worry about grammar or spelling<br>
+                            - Experiment with different formats<br>
+                            - Review past entries to notice patterns/growth</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 16 -->
+            <div class="article-card" data-categories="workplace">
+                <div class="article-image">
+                    <img src="article_16.avif" alt="Workplace Wellness">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Workplace Wellness</span>
+                    <h3 class="article-title">Managing Work-Related Stress and Avoiding Burnout</h3>
+                    <p class="article-excerpt">Practical strategies to maintain mental health in the workplace and create
+                        sustainable work-life balance...</p>
+                    <div class="article-full-content">
+                        <p><strong>Recognizing Workplace Stress Signs</strong><br>
+                            Common indicators include:<br>
+                            - Constant fatigue and low energy<br>
+                            - Difficulty concentrating<br>
+                            - Increased irritability<br>
+                            - Physical symptoms (headaches, stomach issues)<br>
+                            - Decreased job satisfaction</p>
+
+                        <p><strong>Stress Reduction at Work</strong><br>
+                            1. Take regular short breaks (5 minutes every hour)<br>
+                            2. Practice desk stretches and breathing exercises<br>
+                            3. Set clear boundaries for work hours<br>
+                            4. Organize and prioritize tasks effectively<br>
+                            5. Communicate needs with supervisors</p>
+
+                        <p><strong>Preventing Burnout</strong><br>
+                            - Schedule regular vacations or mental health days<br>
+                            - Develop interests outside of work<br>
+                            - Maintain social connections<br>
+                            - Practice self-compassion<br>
+                            - Know when to seek professional help</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 17 -->
+            <div class="article-card" data-categories="compassion">
+                <div class="article-image">
+                    <img src="article_17.avif" alt="Self-Compassion">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Self-Compassion</span>
+                    <h3 class="article-title">The Healing Power of Self-Compassion</h3>
+                    <p class="article-excerpt">Learn how treating yourself with kindness can reduce anxiety, improve
+                        resilience, and foster emotional wellbeing...</p>
+                    <div class="article-full-content">
+                        <p><strong>What is Self-Compassion?</strong><br>
+                            Self-compassion involves treating yourself with the same kindness, concern and support you'd
+                            show a good friend during difficult times.</p>
+
+                        <p><strong>Three Components</strong><br>
+                            1. <strong>Self-Kindness</strong>: Being gentle rather than self-critical<br>
+                            2. <strong>Common Humanity</strong>: Recognizing struggles are part of human experience<br>
+                            3. <strong>Mindfulness</strong>: Balanced awareness of emotions</p>
+
+                        <p><strong>Self-Compassion Exercises</strong><br>
+                            - Write a compassionate letter to yourself<br>
+                            - Practice mindful self-compassion meditations<br>
+                            - Develop a self-compassion mantra<br>
+                            - Notice and reframe self-critical thoughts<br>
+                            - Treat yourself as you would treat a friend</p>
+
+                        <p><strong>Benefits</strong><br>
+                            - Reduces anxiety and depression<br>
+                            - Increases emotional resilience<br>
+                            - Improves motivation and personal growth<br>
+                            - Enhances relationship satisfaction<br>
+                            - Promotes healthier lifestyle choices</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 18 -->
+            <div class="article-card" data-categories="music">
+                <div class="article-image">
+                    <img src="article_18.avif" alt="Music Therapy">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Music Therapy</span>
+                    <h3 class="article-title">How Music Influences Mood and Mental Health</h3>
+                    <p class="article-excerpt">Explore the therapeutic effects of music and how to use it
+                        intentionally to reduce stress, improve focus, and boost mood...</p>
+                    <div class="article-full-content">
+                        <p><strong>The Science Behind Music's Effects</strong><br>
+                            Music can:<br>
+                            - Reduce cortisol levels and lower blood pressure<br>
+                            - Increase dopamine production (feel-good chemical)<br>
+                            - Synchronize brain waves to different states<br>
+                            - Evoke memories and emotional release</p>
+
+                        <p><strong>Creating Therapeutic Playlists</strong><br>
+                            1. <strong>Energy Boost</strong>: Upbeat songs for motivation<br>
+                            2. <strong>Stress Relief</strong>: Calming instrumental music<br>
+                            3. <strong>Focus Flow</strong>: Music without lyrics for concentration<br>
+                            4. <strong>Emotional Release</strong>: Songs that validate feelings<br>
+                            5. <strong>Sleep Aid</strong>: Slow tempo, relaxing sounds</p>
+
+                        <p><strong>Active Music Engagement</strong><br>
+                            - Sing along to release emotions<br>
+                            - Play an instrument as meditation<br>
+                            - Move/dance to music for mood lift<br>
+                            - Create music as self-expression<br>
+                            - Attend live music events for connection</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 19 -->
+            <div class="article-card" data-categories="laughter">
+                <div class="article-image">
+                    <img src="article_19.avif" alt="Laughter Therapy">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Laughter Therapy</span>
+                    <h3 class="article-title">Laughter as Medicine: The Mental Health Benefits of Humor</h3>
+                    <p class="article-excerpt">Discover how laughter reduces stress, boosts mood, and
+                        contributes to overall emotional wellbeing...</p>
+                    <div class="article-full-content">
+                        <p><strong>Physical Benefits of Laughter</strong><br>
+                            - Releases endorphins (natural painkillers)<br>
+                            - Reduces stress hormones<br>
+                            - Boosts immune system<br>
+                            - Relaxes muscles for up to 45 minutes<br>
+                            - Improves oxygen flow to brain and body</p>
+
+                        <p><strong>Mental Health Benefits</strong><br>
+                            - Shifts perspective during difficulties<br>
+                            - Connects people and reduces loneliness<br>
+                            - Provides emotional release<br>
+                            - Enhances resilience<br>
+                            - Counters anxiety and depression symptoms</p>
+
+                        <p><strong>Incorporating More Laughter</strong><br>
+                            - Watch/listen to comedy regularly<br>
+                            - Spend time with funny people<br>
+                            - Try laughter yoga exercises<br>
+                            - Don't take yourself too seriously<br>
+                            - Find humor in everyday situations<br>
+                            - Share funny stories with others</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 20 -->
+            <div class="article-card" data-categories="mindfulness,stress">
+                <div class="article-image">
+                    <img src="article_20.avif" alt="Body Scan Meditation">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Mindfulness & Stress</span>
+                    <h3 class="article-title">Body Scan Meditation for Stress and Tension Release</h3>
+                    <p class="article-excerpt">Learn this powerful mindfulness technique to identify and
+                        release physical tension connected to stress and anxiety...</p>
+                    <div class="article-full-content">
+                        <p><strong>What is a Body Scan?</strong><br>
+                            A body scan is a mindfulness practice that involves systematically focusing
+                            attention on different parts of the body to notice sensations without judgment.
+                        </p>
+
+                        <p><strong>How to Practice</strong><br>
+                            1. Lie down or sit comfortably<br>
+                            2. Bring attention to your breath for a few moments<br>
+                            3. Slowly move attention from toes to head<br>
+                            4. Notice sensations in each body part<br>
+                            5. Release tension as you exhale<br>
+                            6. Practice non-judgmental awareness</p>
+
+                        <p><strong>Benefits</strong><br>
+                            - Reduces physical tension and stress<br>
+                            - Increases body awareness<br>
+                            - Helps identify stress responses early<br>
+                            - Promotes relaxation and better sleep<br>
+                            - Enhances mind-body connection</p>
+
+                        <p><strong>Variations</strong><br>
+                            - Quick 3-minute scan for busy days<br>
+                            - Guided recordings for beginners<br>
+                            - Themed scans (releasing, energizing)<br>
+                            - Combining with progressive muscle relaxation</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Article 21 -->
+            <div class="article-card" data-categories="cognitive">
+                <div class="article-image">
+                    <img src="article_21.avif" alt="Cognitive Exercises">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Cognitive Health</span>
+                    <h3 class="article-title">Brain-Boosting Exercises for Mental Clarity and Focus</h3>
+                    <p class="article-excerpt">Simple daily exercises to enhance cognitive function,
+                        improve memory, and maintain mental sharpness at any age...</p>
+                    <div class="article-full-content">
+                        <p><strong>Why Cognitive Exercise Matters</strong><br>
+                            Regular mental stimulation can:<br>
+                            - Improve memory and recall<br>
+                            - Enhance focus and concentration<br>
+                            - Slow age-related cognitive decline<br>
+                            - Increase neuroplasticity (brain's ability to adapt)<br>
+                            - Reduce risk of dementia</p>
+
+                        <p><strong>Daily Brain Exercises</strong><br>
+                            1. <strong>Dual N-Back</strong>: Memory training game<br>
+                            2. <strong>Learning New Skills</strong>: Language, instrument, etc.<br>
+                            3. <strong>Puzzles</strong>: Crosswords, Sudoku, chess<br>
+                            4. <strong>Novelty Challenges</strong>: Change routines<br>
+                            5. <strong>Mind Mapping</strong>: Visual organization tool</p>
+
+                        <p><strong>Lifestyle Factors</strong><br>
+                            - Physical exercise increases brain blood flow<br>
+                            - Social interaction stimulates cognition<br>
+                            - Quality sleep consolidates memories<br>
+                            - Healthy diet nourishes brain cells<br>
+                            - Stress management protects brain health</p>
+                    </div>
+
+                    <button class="read-more-btn" onclick="toggleArticle(this)">Read More <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="emergency-contacts">
+            <h2>Need Immediate Help?</h2>
+            <p>If you're in crisis, these resources are available 24/7</p>
+            <div class="contact-links">
+                <a href="tel:988" class="contact-link"><i class="fas fa-phone-alt"></i> 988 Suicide & Crisis Lifeline</a>
+                <a href="tel:18006624357" class="contact-link"><i class="fas fa-phone-alt"></i> NAMI HelpLine</a>
+                <a href="chat.html" class="contact-link"><i class="fas fa-comments"></i> SereneMind Chat Support</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-peace" id="focusToggle">
+        <i class="fas fa-spa"></i>
+    </div>
+
+    <script>
+        // Toggle full article content
+        function toggleArticle(button) {
+            const articleCard = button.closest('.article-card');
+            const fullContent = articleCard.querySelector('.article-full-content');
+            const excerpt = articleCard.querySelector('.article-excerpt');
+
+            if (fullContent.style.display === 'block') {
+                fullContent.style.display = 'none';
+                excerpt.style.display = 'block';
+                button.innerHTML = 'Read More <i class="fas fa-arrow-right"></i>';
+                articleCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                fullContent.style.display = 'block';
+                excerpt.style.display = 'none';
+                button.innerHTML = 'Read Less <i class="fas fa-arrow-up"></i>';
+                articleCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Category filtering functionality
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+
+                // Get selected category
+                const category = this.dataset.category;
+
+                // Filter articles
+                const articles = document.querySelectorAll('.article-card');
+                articles.forEach(article => {
+                    if (category === 'all' || article.dataset.categories.includes(category)) {
+                        article.style.display = 'block';
+                    } else {
+                        article.style.display = 'none';
+                        // Also close any open articles when filtering
+                        const fullContent = article.querySelector('.article-full-content');
+                        const excerpt = article.querySelector('.article-excerpt');
+                        const button = article.querySelector('.read-more-btn');
+                        fullContent.style.display = 'none';
+                        excerpt.style.display = 'block';
+                        button.innerHTML = 'Read More <i class="fas fa-arrow-right"></i>';
+                    }
+                });
+            });
+        });
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Check for saved user preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            body.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            if (theme === 'dark') {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        // Check if user is logged in
+        window.addEventListener('DOMContentLoaded', function () {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+
+    <script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
+<script>
+  window.addEventListener("DOMContentLoaded", function() {
+    window.AgentInitializer.init({
+      agentRenderURL: "https://agent.jotform.com/019561cf62ae7d609cb0d3faf8d38aeff7e2",
+      rootId: "JotformAgent-019561cf62ae7d609cb0d3faf8d38aeff7e2",
+      formID: "019561cf62ae7d609cb0d3faf8d38aeff7e2",
+      queryParams: ["skipWelcome=1", "maximizable=1"],
+      domain: "https://www.jotform.com",
+      isDraggable: false,
+      background: "linear-gradient(180deg, #f8e71c 0%, #f5a623 100%)",
+      buttonBackgroundColor: "#50e3c2",
+      buttonIconColor: "#f5a623",
+      variant: false,
+      customizations: {
+        "greeting": "Yes",
+        "greetingMessage": "If you have anything feel free to talk😊",
+        "pulse": "Yes",
+        "position": "left",
+        "autoOpenChatIn": "0"
+      },
+      isVoice: false
+    });
+  });
+</script>
+</body>
+
+</html>

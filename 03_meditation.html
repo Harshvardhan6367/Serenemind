@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SereneMind - Mindful Meditation Guide</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6d8b74;
+      --primary-light: #a7c4bc;
+      --primary-dark: #5c7a6d;
+      --accent: #d0c9c0;
+      --light: #f5f5f5;
+      --dark: #3a3a3a;
+      --gray: #8e8e8e;
+      --success: #7d9d7d;
+      --error: #d4a5a5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--dark);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    /* Peaceful Nature-Inspired Background */
+    .background-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .background-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('back.gif') center/cover no-repeat;
+      opacity: 0.15;
+      filter: blur(1px);
+    }
+
+    /* Header Styles */
+    header {
+      background-color: rgba(245, 245, 245, 0.85);
+      width: 100%;
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.75rem;
+      font-weight: 300;
+      color: var(--primary-dark);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+    }
+
+    .nav-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-menu ul li a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 400;
+      transition: all 0.3s;
+      padding: 0.5rem 0;
+      position: relative;
+      font-size: 1.05rem;
+    }
+
+    .nav-menu ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: var(--primary);
+      transition: width 0.3s;
+    }
+
+    .nav-menu ul li a:hover::after {
+      width: 100%;
+    }
+
+    .nav-menu ul li a.active {
+      color: var(--primary);
+    }
+
+    /* Main Content */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      padding: 2rem;
+      gap: 3rem;
+    }
+
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 0 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      font-size: 2.8rem;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: var(--gray);
+      font-weight: 300;
+    }
+
+    /* Meditation Cards - 2 per row */
+    .meditation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .meditation-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .meditation-card {
+      background: rgba(245, 245, 245, 0.9);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    .meditation-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .pose-header {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .pose-gif {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 8s ease-in-out;
+    }
+
+    .meditation-card:hover .pose-gif {
+      transform: scale(1.1);
+    }
+
+    .pose-title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      color: white;
+      padding: 1.5rem;
+      font-size: 1.5rem;
+      font-weight: 400;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .pose-content {
+      padding: 1.8rem;
+    }
+
+    .pose-description {
+      margin-bottom: 1.5rem;
+      color: var(--gray);
+      font-size: 1rem;
+      font-weight: 300;
+    }
+
+    /* Steps Section */
+    .steps-title {
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2rem;
+    }
+
+    .steps-list {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .steps-list li {
+      margin-bottom: 0.75rem;
+      transition: all 0.3s ease;
+      position: relative;
+      padding-left: 1.5rem;
+      font-weight: 300;
+    }
+
+    .steps-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--primary);
+    }
+
+    .steps-list li.highlight-step {
+      font-weight: 400;
+      color: var(--primary-dark);
+      transform: translateX(5px);
+    }
+
+    /* More Details Section */
+    .more-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+      margin-top: 0.5rem;
+    }
+
+    .more-details.expanded {
+      max-height: 1000px;
+    }
+
+    .more-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.5rem;
+      font-weight: 400;
+    }
+
+    .more-btn:hover {
+      background: rgba(109, 139, 116, 0.1);
+    }
+
+    .more-btn i {
+      transition: all 0.3s ease;
+    }
+
+    .more-btn.expanded i {
+      transform: rotate(180deg);
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+      background: rgba(109, 139, 116, 0.08);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border-left: 4px solid var(--primary);
+    }
+
+    .benefits-title {
+      font-weight: 400;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--primary-dark);
+      font-size: 1.1rem;
+    }
+
+    .benefits-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.8rem;
+      list-style: none;
+    }
+
+    .benefits-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    .benefits-list li::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    /* Timer Section */
+    .timer-section {
+      width: 100%;
+      max-width: 800px;
+      background: rgba(245, 245, 245, 0.9);
+      border-radius: 1rem;
+      padding: 3rem 2rem;
+      margin-top: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    .timer-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      font-weight: 300;
+    }
+
+    .timer-display {
+      font-size: 4rem;
+      font-weight: 300;
+      margin: 1.5rem 0;
+      font-family: 'Courier New', monospace;
+      color: var(--primary-dark);
+      letter-spacing: -3px;
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .timer-btn {
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 0.8rem;
+      background-color: var(--primary);
+      color: white;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(109, 139, 116, 0.2);
+      min-width: 120px;
+      letter-spacing: 0.5px;
+    }
+
+    .timer-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(109, 139, 116, 0.3);
+    }
+
+    .timer-btn:active {
+      transform: translateY(1px);
+    }
+
+    .timer-btn:disabled {
+      background-color: var(--gray);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .timer-presets {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .preset-btn {
+      padding: 0.7rem 1.5rem;
+      border: 1px solid var(--primary);
+      border-radius: 2rem;
+      background: transparent;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 300;
+    }
+
+    .preset-btn:hover {
+      background-color: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(109, 139, 116, 0.2);
+    }
+
+    /* Breathing Circle for Timer */
+    .breathing-circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(109, 139, 116, 0.1);
+      margin: 0 auto 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: all 1.5s ease-in-out;
+    }
+
+    .breathing-circle::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid rgba(109, 139, 116, 0.3);
+      border-radius: 50%;
+      animation: pulse 4s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.7; }
+      50% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.7; }
+    }
+
+    /* Focus Mode for Meditation */
+    .focus-mode {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .focus-mode.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .focus-timer {
+      font-size: 5rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      font-family: 'Courier New', monospace;
+      color: white;
+    }
+
+    .focus-instruction {
+      font-size: 1.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      max-width: 600px;
+      line-height: 1.6;
+      opacity: 0.8;
+      font-weight: 300;
+    }
+
+    .focus-controls {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .focus-btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 0.8rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      backdrop-filter: blur(5px);
+      letter-spacing: 0.5px;
+    }
+
+    .focus-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .focus-btn.primary {
+      background-color: var(--primary);
+    }
+
+    .focus-btn.primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    /* Breathing Animation */
+    .breath-animation {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 2rem auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .breath-circle {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+      border-radius: 50%;
+      animation: breathe 8s infinite ease-in-out;
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(0.8); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+
+    /* Floating Peace Button */
+    .floating-peace {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 5px 20px rgba(109, 139, 116, 0.3);
+      transition: all 0.3s ease;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .floating-peace:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 8px 25px rgba(109, 139, 116, 0.4);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      background-color: rgba(245, 245, 245, 0.9);
+      padding: 2rem;
+      text-align: center;
+      margin-top: 4rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+      font-weight: 300;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s;
+      font-weight: 400;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-menu ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .page-title {
+        font-size: 2.2rem;
+      }
+      
+      .timer-display {
+        font-size: 3.5rem;
+      }
+
+      .meditation-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pose-header {
+        height: 220px;
+      }
+
+      .timer-controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .timer-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-title {
+        font-size: 2rem;
+      }
+      
+      .page-subtitle {
+        font-size: 1rem;
+      }
+
+      .pose-title {
+        font-size: 1.3rem;
+        padding: 1rem;
+      }
+
+      .pose-content {
+        padding: 1.5rem;
+      }
+
+      .timer-section {
+        padding: 2rem 1.5rem;
+      }
+
+      .timer-display {
+        font-size: 3rem;
+      }
+
+      .preset-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .floating-peace {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+        bottom: 1.5rem;
+        right: 1.5rem;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-wrapper"></div>
+
+  <!-- Focus Mode Overlay -->
+  <div class="focus-mode" id="focusMode">
+    <div class="breath-animation">
+      <div class="breath-circle"></div>
+    </div>
+    <div class="focus-timer" id="focusTimer">05:00</div>
+    <div class="focus-instruction">
+      Breathe in... Breathe out...<br>
+      Focus on your breath and let go of distractions
+    </div>
+    <div class="focus-controls">
+      <button class="focus-btn" id="focusPauseBtn">Pause</button>
+      <button class="focus-btn primary" id="focusCloseBtn">End Session</button>
+    </div>
+  </div>
+
+  <!-- Floating Peace Button -->
+  <div class="floating-peace" id="focusToggle">
+    <i class="fas fa-spa"></i>
+  </div>
+
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-peace"></i>
+        <span>SereneMind</span>
+      </a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="01_index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="02_articles.html" class="active"><i class="fas fa-newspaper"></i> Articles</a></li>
+                    <li><a href="#"><i class="fas fa-spa"></i> Meditation</a></li>
+                    <li><a href="https://agent.jotform.com/019561cf62ae7d609cb0d3faf8d38aeff7e2"><i
+                                class="fas fa-comments"></i> Support</a></li>
+                    <li><a href="04_doctors.html"><i class="fas fa-user-md"></i> Doctors</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <div class="page-header">
+      <h1 class="page-title">Mindful Meditation Guide</h1>
+      <p class="page-subtitle">Discover peaceful meditation techniques with guided instructions, benefits, and visual demonstrations to enhance your mindfulness practice.</p>
+    </div>
+
+    <!-- Meditation Timer -->
+    <div class="timer-section">
+      <h2>Mindful Meditation Timer</h2>
+      <div class="breathing-circle">
+        <div class="timer-display" id="timer">05:00</div>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-btn" id="startBtn">Start</button>
+        <button class="timer-btn" id="pauseBtn" disabled>Pause</button>
+        <button class="timer-btn" id="resetBtn">Reset</button>
+      </div>
+      <div class="timer-presets">
+        <button class="preset-btn" data-minutes="1">1 min</button>
+        <button class="preset-btn" data-minutes="3">3 min</button>
+        <button class="preset-btn" data-minutes="5">5 min</button>
+        <button class="preset-btn" data-minutes="10">10 min</button>
+        <button class="preset-btn" data-minutes="15">15 min</button>
+        <button class="preset-btn" data-minutes="20">20 min</button>
+      </div>
+    </div>
+
+    <div class="meditation-grid">
+      
+      <!-- Lotus Pose -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="mad01.gif" alt="Lotus Pose" class="pose-gif">
+          <h2 class="pose-title">Lotus Pose (Padmasana)</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">The classic meditation posture that promotes stability and deep focus, helping to calm the mind and prepare for meditation.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Sit on the floor with legs extended straight in front of you</li>
+            <li>Bend your right knee and place your right foot on your left thigh, sole facing upward</li>
+            <li>Bend your left knee and place your left foot on your right thigh, sole facing upward</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Keep your spine straight and lengthen through the crown of your head</li>
+              <li>Rest your hands on your knees in Gyan Mudra (thumb and index finger touching)</li>
+              <li>Close your eyes and focus on deep, rhythmic breathing</li>
+              <li>Hold the pose for 5-30 minutes, maintaining stillness</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Improves posture and spinal alignment</li>
+                <li>Calms the mind and reduces anxiety</li>
+                <li>Enhances concentration and focus</li>
+                <li>Stretches hips and increases flexibility</li>
+                <li>Reduces stress and muscle tension</li>
+                <li>Stimulates digestion and pelvic organs</li>
+                <li>Promotes emotional balance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Easy Pose -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="mad02.gif" alt="Easy Pose" class="pose-gif">
+          <h2 class="pose-title">Easy Pose (Sukhasana)</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A comfortable seated position perfect for beginners, promoting relaxation and mindfulness without strain.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Sit cross-legged on a cushion or meditation mat</li>
+            <li>Allow your knees to fall comfortably below your hips</li>
+            <li>Keep your spine erect but relaxed, shoulders down</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Align your head directly over your pelvis</li>
+              <li>Rest your hands on your knees or in your lap</li>
+              <li>Breathe naturally and focus on the rise and fall of your abdomen</li>
+              <li>Hold the position for 5-20 minutes, adjusting as needed</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Reduces anxiety and mental fatigue</li>
+                <li>Promotes calmness and relaxation</li>
+                <li>Gentle on joints and accessible to all levels</li>
+                <li>Improves breathing and lung capacity</li>
+                <li>Strengthens back muscles</li>
+                <li>Creates a sense of grounding</li>
+                <li>Ideal for short daily meditation sessions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Corpse Pose -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="mad03.gif" alt="Corpse Pose" class="pose-gif">
+          <h2 class="pose-title">Corpse Pose (Savasana)</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">Complete relaxation pose for deep meditation and stress relief, allowing full surrender to the present moment.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Lie flat on your back on a comfortable surface</li>
+            <li>Extend your arms at your sides, palms facing upward</li>
+            <li>Allow your legs to fall open slightly, toes pointing outward</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Close your eyes and relax every muscle in your body</li>
+              <li>Release tension from your forehead, jaw, shoulders, and hands</li>
+              <li>Focus on natural breath without trying to control it</li>
+              <li>Remain in the pose for 5-15 minutes, maintaining awareness</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Reduces stress and anxiety significantly</li>
+                <li>Lowers blood pressure and heart rate</li>
+                <li>Improves sleep quality and combats insomnia</li>
+                <li>Relieves physical and mental fatigue</li>
+                <li>Calms the nervous system</li>
+                <li>Helps with headache and migraine relief</li>
+                <li>Promotes deep relaxation and mindfulness</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Walking Meditation -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="mad04.gif" alt="Walking Meditation" class="pose-gif">
+          <h2 class="pose-title">Walking Meditation</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">Mindful movement practice that cultivates awareness through the simple act of walking with full presence.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Walk slowly in a quiet, peaceful space (about half normal speed)</li>
+            <li>Sync your breath with your steps (inhale for 2-3 steps, exhale for 2-3 steps)</li>
+            <li>Feel the contact between your feet and the ground with each step</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Maintain an upright but relaxed posture</li>
+              <li>Stay present with physical sensations - the swing of your arms, the breeze on your skin</li>
+              <li>When your mind wanders, gently return focus to your steps and breath</li>
+              <li>Practice for 10-30 minutes, ideally in nature</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Improves mindfulness and present-moment awareness</li>
+                <li>Provides gentle physical exercise</li>
+                <li>Reduces restlessness and anxiety</li>
+                <li>Deepens connection with nature and surroundings</li>
+                <li>Enhances circulation and digestion</li>
+                <li>Can be practiced anywhere, anytime</li>
+                <li>Combines movement with meditation benefits</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seated Forward Bend -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="mad05.gif" alt="Seated Forward Bend" class="pose-gif">
+          <h2 class="pose-title">Seated Forward Bend (Paschimottanasana)</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A calming forward fold that stretches the spine and hamstrings while promoting introspection.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Sit with legs extended straight in front of you</li>
+            <li>Inhale and lengthen your spine, reaching arms overhead</li>
+            <li>Exhale and fold forward from the hips, reaching for your feet</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Keep your spine long rather than rounding your back</li>
+              <li>Relax your neck and shoulders</li>
+              <li>Breathe deeply and hold for 1-3 minutes</li>
+              <li>Release slowly on an inhale</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Calms the brain and relieves stress</li>
+                <li>Stretches the spine and hamstrings</li>
+                <li>Stimulates the liver, kidneys and digestive organs</li>
+                <li>Improves posture and spinal alignment</li>
+                <li>Reduces anxiety and fatigue</li>
+                <li>Helps relieve symptoms of menopause</li>
+                <li>Therapeutic for high blood pressure</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Half Lotus Pose -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="mad06.gif" alt="Half Lotus Pose" class="pose-gif">
+          <h2 class="pose-title">Half Lotus Pose (Ardha Padmasana)</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A modified version of the full lotus pose that's easier on the knees while still providing stability for meditation.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Sit on the floor with legs extended straight in front of you</li>
+            <li>Bend your right knee and place your right foot on your left thigh</li>
+            <li>Keep your left leg extended or bend it under your right thigh</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Keep your spine straight and shoulders relaxed</li>
+              <li>Place your hands on your knees in meditation mudra</li>
+              <li>Switch leg positions after several minutes to balance the stretch</li>
+              <li>Hold for 5-20 minutes, maintaining steady breathing</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Easier alternative to full lotus pose</li>
+                <li>Stretches hips and knees gently</li>
+                <li>Improves posture and spinal alignment</li>
+                <li>Calms the mind and reduces stress</li>
+                <li>Increases flexibility in the legs</li>
+                <li>Prepares the body for full lotus pose</li>
+                <li>Promotes concentration and focus</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Burmese Position -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="mad07.gif" alt="Burmese Position" class="pose-gif">
+          <h2 class="pose-title">Burmese Position</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A comfortable seated position with both legs folded in front, ideal for those who find lotus poses challenging.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Sit on a cushion with both legs folded in front of you</li>
+            <li>Place one ankle in front of the other (not stacked)</li>
+            <li>Keep both knees resting comfortably on the floor</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Maintain a straight spine with shoulders relaxed</li>
+              <li>Rest hands on knees or in your lap</li>
+              <li>Close eyes and focus on natural breathing</li>
+              <li>Hold for 10-30 minutes as comfortable</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Gentle on knees and ankles</li>
+                <li>Promotes proper spinal alignment</li>
+                <li>Comfortable for extended meditation</li>
+                <li>Reduces lower back strain</li>
+                <li>Accessible to most body types</li>
+                <li>Encourages grounded feeling</li>
+                <li>Good introductory meditation pose</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Seiza Pose -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="mad08.gif" alt="Seiza Pose" class="pose-gif">
+          <h2 class="pose-title">Seiza Pose</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">Traditional Japanese kneeling position that promotes alertness while maintaining comfort.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Kneel on the floor with knees together</li>
+            <li>Sit back onto your heels with toes pointing backward</li>
+            <li>Keep your spine straight and shoulders relaxed</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Place hands on thighs or in meditation mudra</li>
+              <li>Use a cushion between thighs and calves if needed</li>
+              <li>Breathe deeply and maintain the posture</li>
+              <li>Hold for 5-15 minutes as comfortable</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Improves digestion and posture</li>
+                <li>Strengthens thigh and back muscles</li>
+                <li>Promotes mental alertness</li>
+                <li>Stretches ankles and tops of feet</li>
+                <li>Good for those with tight hips</li>
+                <li>Encourages proper breathing</li>
+                <li>Traditional Zen meditation posture</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Chair Meditation -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Chair Meditation" class="pose-gif">
+          <h2 class="pose-title">Chair Meditation</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">An accessible meditation position using a chair, perfect for those with mobility limitations.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Sit on a straight-backed chair with feet flat on floor</li>
+            <li>Keep knees at 90-degree angle, hip-width apart</li>
+            <li>Rest hands on thighs or in lap</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Maintain natural curve in lower back</li>
+              <li>Keep chin parallel to floor, crown lifting upward</li>
+              <li>Close eyes and focus on breath</li>
+              <li>Hold position for desired meditation duration</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Accessible for all fitness levels</li>
+                <li>Reduces strain on joints</li>
+                <li>Good for office meditation</li>
+                <li>Maintains proper spinal alignment</li>
+                <li>Can be done anywhere with a chair</li>
+                <li>Ideal for seniors or injured practitioners</li>
+                <li>Equally effective as floor positions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Siddhasana -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Siddhasana" class="pose-gif">
+          <h2 class="pose-title">Siddhasana (Adept's Pose)</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">An ancient meditation posture believed to channel energy upward through the spine.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Sit with legs extended, then bend left knee</li>
+            <li>Place left heel against perineum</li>
+            <li>Bend right knee and place right foot over left ankle</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Tuck right toes between left thigh and calf</li>
+              <li>Keep spine straight, hands in chin or jnana mudra</li>
+              <li>Maintain steady breathing pattern</li>
+              <li>Hold for meditation duration, then switch sides</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Stimulates energy flow through spine</li>
+                <li>Calms nervous system</li>
+                <li>Improves concentration</li>
+                <li>Strengthens pelvic floor muscles</li>
+                <li>Traditional pose for pranayama</li>
+                <li>Easier on knees than lotus</li>
+                <li>Believed to awaken kundalini energy</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Vajrasana (Thunderbolt Pose) -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Vajrasana" class="pose-gif">
+          <h2 class="pose-title">Vajrasana (Thunderbolt Pose)</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A kneeling meditation pose that aids digestion and promotes mental clarity.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Kneel on floor with knees together</li>
+            <li>Sit back onto heels with tops of feet flat on floor</li>
+            <li>Keep spine erect and shoulders relaxed</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Place palms on thighs or in lap</li>
+              <li>Close eyes and focus on breath</li>
+              <li>Use cushion between thighs and calves if needed</li>
+              <li>Hold for 5-20 minutes as comfortable</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Aids digestion (ideal after meals)</li>
+                <li>Strengthens thigh muscles</li>
+                <li>Improves circulation to lower body</li>
+                <li>Reduces stress and anxiety</li>
+                <li>Stretches ankles and feet</li>
+                <li>Promotes mental alertness</li>
+                <li>Good for sciatica relief</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Standing Meditation -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Standing Meditation" class="pose-gif">
+          <h2 class="pose-title">Standing Meditation</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">An active meditation posture that builds strength while cultivating mindfulness.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Stand with feet shoulder-width apart</li>
+            <li>Bend knees slightly, aligning over toes</li>
+            <li>Keep spine straight, crown lifting upward</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Relax shoulders with arms at sides or in prayer position</li>
+              <li>Engage core muscles gently</li>
+              <li>Focus on breath and body sensations</li>
+              <li>Hold for 5-15 minutes with soft gaze</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Builds leg and core strength</li>
+                <li>Improves balance and posture</li>
+                <li>Energizes the body</li>
+                <li>Good for those who sit all day</li>
+                <li>Can be done anywhere</li>
+                <li>Connects with earth energy</li>
+                <li>Traditional qigong posture</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Reclining Bound Angle Pose -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Reclining Bound Angle" class="pose-gif">
+          <h2 class="pose-title">Reclining Bound Angle Pose</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A restorative meditation position that opens the heart and hips while promoting deep relaxation.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Lie on back with knees bent and feet flat</li>
+            <li>Bring soles of feet together, letting knees fall outward</li>
+            <li>Place arms at sides with palms facing up</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Use pillows under knees if needed for support</li>
+              <li>Close eyes and focus on deep belly breathing</li>
+              <li>Release all muscular tension</li>
+              <li>Hold for 5-15 minutes</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Relieves stress and fatigue</li>
+                <li>Opens hips and groin area</li>
+                <li>Stimulates abdominal organs</li>
+                <li>Improves circulation</li>
+                <li>Relieves menstrual discomfort</li>
+                <li>Good for varicose vein relief</li>
+                <li>Promotes deep relaxation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Lion's Pose (Simhasana) -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Lion's Pose" class="pose-gif">
+          <h2 class="pose-title">Lion's Pose (Simhasana)</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">An energizing meditation posture that releases tension through expressive breath and movement.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Kneel with hips resting on heels</li>
+            <li>Place hands on knees, fingers spread wide</li>
+            <li>Inhale deeply through nose</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Exhale forcefully while sticking out tongue and opening eyes wide</li>
+              <li>Roar like a lion on the exhale</li>
+              <li>Repeat 3-5 times then sit quietly</li>
+              <li>Transition to silent meditation</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Relieves facial tension</li>
+                <li>Reduces stress and anxiety</li>
+                <li>Stimulates platysma muscle</li>
+                <li>Improves vocal clarity</li>
+                <li>Energizes the body</li>
+                <li>Good for throat chakra</li>
+                <li>Releases emotional blockages</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Supported Child's Pose -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Supported Child's Pose" class="pose-gif">
+          <h2 class="pose-title">Supported Child's Pose</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A deeply restorative meditation variation that promotes surrender and introspection.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Kneel on floor with big toes touching</li>
+            <li>Place bolster or stack of pillows lengthwise between thighs</li>
+            <li>Fold forward over support with arms extended</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Turn head to one side, then switch halfway through</li>
+              <li>Breathe deeply into back body</li>
+              <li>Release all muscular effort</li>
+              <li>Hold for 5-10 minutes</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Relieves back and neck tension</li>
+                <li>Calms the nervous system</li>
+                <li>Encourages emotional release</li>
+                <li>Gently stretches hips and spine</li>
+                <li>Reduces fatigue and anxiety</li>
+                <li>Good for insomnia relief</li>
+                <li>Promotes deep introspection</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Legs-Up-the-Wall Pose -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Legs-Up-the-Wall" class="pose-gif">
+          <h2 class="pose-title">Legs-Up-the-Wall Pose</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A passive inversion that rejuvenates while allowing deep meditation.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Sit sideways with right hip against wall</li>
+            <li>Swing legs up wall as you lie back</li>
+            <li>Adjust hips close to wall (not touching if uncomfortable)</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Rest arms at sides with palms up</li>
+              <li>Close eyes and focus on slow breathing</li>
+              <li>Use folded blanket under hips if needed</li>
+              <li>Hold for 5-15 minutes</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Relieves tired legs and feet</li>
+                <li>Reduces mild backache</li>
+                <li>Calms the nervous system</li>
+                <li>Improves circulation</li>
+                <li>Helps reduce swelling in legs</li>
+                <li>Gentle inversion benefits</li>
+                <li>Promotes relaxation response</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Crocodile Pose (Makarasana) -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Crocodile Pose" class="pose-gif">
+          <h2 class="pose-title">Crocodile Pose (Makarasana)</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A prone meditation position that focuses awareness on the breath and abdominal movement.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Lie face down with legs extended</li>
+            <li>Cross arms and rest forehead on stacked hands</li>
+            <li>Separate heels slightly with toes pointing outward</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Close eyes and focus on belly pressing into floor on inhale</li>
+              <li>Relax completely on each exhale</li>
+              <li>Breathe deeply into back body</li>
+              <li>Hold for 5-10 minutes</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Improves diaphragmatic breathing</li>
+                <li>Relieves lower back tension</li>
+                <li>Calms the nervous system</li>
+                <li>Good for respiratory issues</li>
+                <li>Reduces fatigue and stress</li>
+                <li>Helps with digestive issues</li>
+                <li>Grounding and centering</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Supported Bridge Pose -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Supported Bridge Pose" class="pose-gif">
+          <h2 class="pose-title">Supported Bridge Pose</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A gentle backbend meditation that opens the heart while maintaining relaxation.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Lie on back with knees bent, feet flat</li>
+            <li>Lift hips and slide yoga block or cushion under sacrum</li>
+            <li>Extend legs straight or keep knees bent</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Rest arms at sides with palms up</li>
+              <li>Close eyes and breathe deeply</li>
+              <li>Release tension in neck and jaw</li>
+              <li>Hold for 3-10 minutes</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Relieves stress and mild depression</li>
+                <li>Stretches chest and spine</li>
+                <li>Improves digestion</li>
+                <li>Reduces fatigue and anxiety</li>
+                <li>Helps relieve symptoms of menopause</li>
+                <li>Therapeutic for asthma and osteoporosis</li>
+                <li>Promotes emotional openness</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Supported Bridge Pose -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Supported Bridge Pose" class="pose-gif">
+          <h2 class="pose-title">Supported Bridge Pose</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A gentle backbend meditation that opens the heart while maintaining relaxation.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Lie on back with knees bent, feet flat</li>
+            <li>Lift hips and slide yoga block or cushion under sacrum</li>
+            <li>Extend legs straight or keep knees bent</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Rest arms at sides with palms up</li>
+              <li>Close eyes and breathe deeply</li>
+              <li>Release tension in neck and jaw</li>
+              <li>Hold for 3-10 minutes</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Relieves stress and mild depression</li>
+                <li>Stretches chest and spine</li>
+                <li>Improves digestion</li>
+                <li>Reduces fatigue and anxiety</li>
+                <li>Helps relieve symptoms of menopause</li>
+                <li>Therapeutic for asthma and osteoporosis</li>
+                <li>Promotes emotional openness</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Rocking Meditation -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Rocking Meditation" class="pose-gif">
+          <h2 class="pose-title">Rocking Meditation</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A rhythmic movement meditation that soothes the nervous system and quiets the mind.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Sit cross-legged on cushion or mat</li>
+            <li>Place hands on knees or hold opposite elbows</li>
+            <li>Begin gentle forward-backward rocking motion</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Let movement be natural and fluid</li>
+              <li>Focus on sensation of movement</li>
+              <li>Gradually slow rocking as mind quiets</li>
+              <li>Transition to stillness when ready</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Calms restless mind</li>
+                <li>Soothes nervous system</li>
+                <li>Improves body awareness</li>
+                <li>Releases spinal tension</li>
+                <li>Good for fidgety meditators</li>
+                <li>Helps transition from activity to stillness</li>
+                <li>Traditional Zen practice</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Lying Spinal Twist -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Lying Spinal Twist" class="pose-gif">
+          <h2 class="pose-title">Lying Spinal Twist</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A reclining twist that releases spinal tension while maintaining meditative awareness.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Lie on back with arms extended in T position</li>
+            <li>Bend right knee and draw it toward chest</li>
+            <li>Guide knee across body to left side</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Keep both shoulders grounded</li>
+              <li>Turn head to right if comfortable</li>
+              <li>Breathe deeply into the twist</li>
+              <li>Hold for 3-5 minutes per side</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Relieves back and neck tension</li>
+                <li>Stimulates digestion</li>
+                <li>Improves spinal mobility</li>
+                <li>Calms the nervous system</li>
+                <li>Good for sciatica relief</li>
+                <li>Releases shoulder tension</li>
+                <li>Promotes relaxation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Mountain Pose (Tadasana) Meditation -->
+      <div class="meditation-card">
+        <div class="pose-header">
+          <img src="pose01.gif" alt="Mountain Pose" class="pose-gif">
+          <h2 class="pose-title">Mountain Pose (Tadasana) Meditation</h2>
+        </div>
+        <div class="pose-content">
+          <p class="pose-description">A standing meditation that cultivates grounded presence and body awareness.</p>
+          
+          <div class="steps-title">
+            <span>How to Perform:</span>
+            <button class="more-btn" onclick="toggleDetails(this)">
+              More <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <ol class="steps-list">
+            <li class="highlight-step">Stand with feet hip-width apart or together</li>
+            <li>Distribute weight evenly through all four corners of feet</li>
+            <li>Engage thigh muscles and lift kneecaps slightly</li>
+          </ol>
+          
+          <div class="more-details">
+            <ol class="steps-list" start="4">
+              <li>Lengthen tailbone toward floor, crown toward ceiling</li>
+              <li>Rest arms at sides or in prayer position</li>
+              <li>Focus on breath and body alignment</li>
+              <li>Hold for 5-15 minutes with soft gaze</li>
+            </ol>
+            
+            <div class="benefits-section">
+              <h3 class="benefits-title"><i class="fas fa-heart"></i> Benefits:</h3>
+              <ul class="benefits-list">
+                <li>Improves posture and balance</li>
+                <li>Strengthens legs and core</li>
+                <li>Increases body awareness</li>
+                <li>Reduces flat feet</li>
+                <li>Promotes grounded presence</li>
+                <li>Good for fatigue relief</li>
+                <li>Foundation for all standing poses</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    
+
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Crisis Resources</a>
+    </div>
+    <p>&copy; 2025 SereneMind. All rights reserved. This content is provided for educational purposes only and is not a substitute for professional medical advice.</p>
+    <p>If you're in crisis, please call your local emergency number or mental health hotline immediately.</p>
+  </footer>
+
+  <script>
+    // Meditation Timer
+    let timer;
+    let totalSeconds = 300; // 5 minutes default
+    let isRunning = false;
+    let isFocusMode = false;
+
+    const timerDisplay = document.getElementById('timer');
+    const focusTimerDisplay = document.getElementById('focusTimer');
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const presetBtns = document.querySelectorAll('.preset-btn');
+    const focusMode = document.getElementById('focusMode');
+    const focusToggle = document.getElementById('focusToggle');
+    const focusPauseBtn = document.getElementById('focusPauseBtn');
+    const focusCloseBtn = document.getElementById('focusCloseBtn');
+
+    function updateDisplay() {
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      timerDisplay.textContent = displayText;
+      focusTimerDisplay.textContent = displayText;
+    }
+
+    function startTimer() {
+      if (!isRunning) {
+        isRunning = true;
+        startBtn.disabled = true;
+        pauseBtn.disabled = false;
+        
+        timer = setInterval(() => {
+          if (totalSeconds > 0) {
+            totalSeconds--;
+            updateDisplay();
+            
+            // Update breathing circle size in focus mode
+            if (isFocusMode) {
+              const breathingIntensity = 0.8 + (0.4 * (totalSeconds % 60 / 60));
+              document.querySelector('.breath-circle').style.transform = `scale(${breathingIntensity})`;
+            }
+          } else {
+            clearInterval(timer);
+            isRunning = false;
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            
+            // Play completion sound
+            const completionSound = new Audio('stop_watch.mp3');
+            completionSound.volume = 0.3;
+            completionSound.play();
+            
+            if (isFocusMode) {
+              setTimeout(() => {
+                focusMode.classList.remove('active');
+                isFocusMode = false;
+              }, 3000);
+            }
+          }
+        }, 1000);
+      }
+    }
+
+    function pauseTimer() {
+      clearInterval(timer);
+      isRunning = false;
+      startBtn.disabled = false;
+      pauseBtn.disabled = true;
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      totalSeconds = 300; // Reset to 5 minutes
+      updateDisplay();
+    }
+
+    // Toggle focus mode
+    focusToggle.addEventListener('click', function() {
+      if (isRunning) {
+        isFocusMode = true;
+        focusMode.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+
+    focusCloseBtn.addEventListener('click', function() {
+      focusMode.classList.remove('active');
+      isFocusMode = false;
+      document.body.style.overflow = '';
+    });
+
+    focusPauseBtn.addEventListener('click', function() {
+      if (isRunning) {
+        pauseTimer();
+        this.textContent = 'Resume';
+      } else {
+        startTimer();
+        this.textContent = 'Pause';
+      }
+    });
+    
+    startBtn.addEventListener('click', startTimer);
+    pauseBtn.addEventListener('click', pauseTimer);
+    resetBtn.addEventListener('click', resetTimer);
+
+    // Preset buttons
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const minutes = parseInt(this.dataset.minutes);
+        totalSeconds = minutes * 60;
+        updateDisplay();
+        if (isRunning) {
+          pauseTimer();
+          startTimer();
+        }
+      });
+    });
+
+    // Toggle More Details
+    function toggleDetails(button) {
+      const card = button.closest('.meditation-card');
+      const details = card.querySelector('.more-details');
+      details.classList.toggle('expanded');
+      button.classList.toggle('expanded');
+      
+      // Update aria-expanded for accessibility
+      const expanded = button.classList.contains('expanded');
+      button.setAttribute('aria-expanded', expanded);
+    }
+
+    // Initialize display
+    updateDisplay();
+
+    // Add smooth scroll to all links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Set aria-labels for better accessibility
+    document.querySelectorAll('.more-btn').forEach(btn => {
+      btn.setAttribute('aria-expanded', 'false');
+    });
+
+    focusToggle.setAttribute('aria-label', 'Enter focus mode');
+  </script>
+
+
+  <script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
+<script>
+  window.addEventListener("DOMContentLoaded", function() {
+    window.AgentInitializer.init({
+      agentRenderURL: "https://agent.jotform.com/019561cf62ae7d609cb0d3faf8d38aeff7e2",
+      rootId: "JotformAgent-019561cf62ae7d609cb0d3faf8d38aeff7e2",
+      formID: "019561cf62ae7d609cb0d3faf8d38aeff7e2",
+      queryParams: ["skipWelcome=1", "maximizable=1"],
+      domain: "https://www.jotform.com",
+      isDraggable: false,
+      background: "linear-gradient(180deg, #f8e71c 0%, #f5a623 100%)",
+      buttonBackgroundColor: "#50e3c2",
+      buttonIconColor: "#f5a623",
+      variant: false,
+      customizations: {
+        "greeting": "Yes",
+        "greetingMessage": "If you have anything feel free to talk😊",
+        "pulse": "Yes",
+        "position": "left",
+        "autoOpenChatIn": "0"
+      },
+      isVoice: false
+    });
+  });
+</script>
+</body>
+</html>
